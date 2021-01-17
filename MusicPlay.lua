@@ -177,9 +177,9 @@ end
 function main()
 	if not isSampLoaded() or not isSampfuncsLoaded() then return end
     while not isSampAvailable() do wait(100) end
-    -- autoupdate('', '['..string.upper(thisScript().name)..']: ', '')
+        autoupdate('https://api.jsonbin.io/b/600478e7e31fbc3bdef4d865', '['..string.upper(thisScript().name)..']: ', 'https://api.jsonbin.io/b/600478e7e31fbc3bdef4d865')
     sampRegisterChatCommand('music', function() WindowMain.v = not WindowMain.v imgui.Process = WindowMain.v end)
-    notify.addNotify('MusicPlay','РЎРєСЂРёРїС‚ Р±С‹Р» СѓСЃРїРµС€РЅРѕ Р·Р°РіСЂСѓР¶РµРЅ!\nРўРµРєСѓС‰Р°СЏ РІРµСЂСЃРёСЏ: '..thisScript().version,2,1,4)
+    notify.addNotify('MusicPlay','Скрипт был успешно загружен!\nТекущая версия: '..thisScript().version,2,1,4)
     while true do wait(0)
         if isKeyDown(0x1B) and WindowMain.v == true then
             WindowMain.v = false
@@ -200,41 +200,41 @@ function imgui.OnDrawFrame()
     if WindowMain.v then
 		imgui.SetNextWindowSize(imgui.ImVec2(615, 400), imgui.Cond.FirstUseEver)
 		imgui.SetNextWindowPos(imgui.ImVec2(X / 2, Y / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
-            imgui.Begin(fa.ICON_MUSIC .. u8' РњСѓР·С‹РєР°Р»СЊРЅРѕРµ РјРµРЅСЋ! ' .. fa.ICON_MUSIC, WindowMain, imgui.WindowFlags.NoResize)
+            imgui.Begin(fa.ICON_MUSIC .. u8' Музыкальное меню! ' .. fa.ICON_MUSIC, WindowMain, imgui.WindowFlags.NoResize)
                 if NullPesen == 1 then
-                    if imgui.Button(u8'Р”РѕР±Р°РІРёС‚СЊ РјСѓР·С‹РєСѓ', imgui.ImVec2(190, 20)) then
+                    if imgui.Button(u8'Добавить музыку', imgui.ImVec2(190, 20)) then
                         WindowNewMusic.v = true
                     end
                 end
                 imgui.SameLine()
-                imgui.CenterText(u8'Р’Р°С€Р° РјСѓР·С‹РєР°:')
+                imgui.CenterText(u8'Ваша музыка:')
                 imgui.BeginChild('Osnova', imgui.ImVec2(599.5, 340), true)
                     if NullPesen == 0 then
                         
                         imgui.SetCursorPos(imgui.ImVec2(120, 135))
-                        imgui.CenterText(u8'РЈ Р’Р°СЃ РµС‰Рµ РЅРµС‚ РЅРё РѕРґРЅРѕР№ РїРµСЃРЅРё!')
+                        imgui.CenterText(u8'У Вас еще нет ни одной песни!')
                         imgui.SetCursorPos(imgui.ImVec2(218.5, 157))
-                        if imgui.Button(fa.ICON_CLOUD_DOWNLOAD .. u8' Р”РѕР±Р°РІРёС‚СЊ РїРµСЃРЅСЋ!', imgui.ImVec2(145, 30)) then
+                        if imgui.Button(fa.ICON_CLOUD_DOWNLOAD .. u8' Добавить песню!', imgui.ImVec2(145, 30)) then
                             WindowNewMusic.v = true
                         end
 
                     elseif NullPesen == 1 then
-                        -- РќРЈР›Р•Р’РђРЇ РЎРўР РћРљРђ
+                        -- НУЛЕВАЯ СТРОКА
                         imgui.Columns(3)
-                        imgui.Text(u8'РќР°Р·РІР°РЅРёРµ РїРµСЃРЅРё:')
+                        imgui.Text(u8'Название песни:')
                         imgui.NextColumn()
-                        imgui.Text(u8'URL-Р°РґСЂРµСЃ:')
+                        imgui.Text(u8'URL-адрес:')
                         imgui.NextColumn()
-                        imgui.Text(u8'Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ:')
+                        imgui.Text(u8'Доступные действия:')
                         imgui.Separator()
 
-                        -- РџР•Р Р’РђРЇ РЎРўР РћРљРђ
+                        -- ПЕРВАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 34))
                         imgui.Text(u8''..mainIni.Music.NamePesnya)
                         if imgui.IsItemHovered() then
                             imgui.BeginTooltip()
-                            imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music.NamePesnya))
+                            imgui.TextUnformatted(u8('Полное название: '..mainIni.Music.NamePesnya))
                             imgui.EndTooltip()
                         end
                         imgui.NextColumn()
@@ -242,13 +242,13 @@ function imgui.OnDrawFrame()
                         imgui.Text(u8''..mainIni.Music.URL)
                         if imgui.IsItemHovered() then
                             imgui.BeginTooltip()
-                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music.URL))
+                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music.URL))
                             imgui.EndTooltip()
                         end
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 33))
                             if imgui.Button(fa.ICON_PLAY .. '##1',imgui.ImVec2(43, 20)) then
-                                notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music.NamePesnya),2,1,5)
+                                notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music.NamePesnya),2,1,5)
                                     if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                         if mainIni.Music.URL ~= '' and string.lower(mainIni.Music.URL):find('http') then
                                             PlayPesnya = loadAudioStream(mainIni.Music.URL)
@@ -258,15 +258,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 33))
                             if imgui.Button(fa.ICON_STOP .. '##2',imgui.ImVec2(43, 20)) then
                                 if PlayPesnya == nil then
-                                    notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                    notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                                 elseif PlayPesnya ~= nil then
                                     setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                        notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                        notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                                 end
                             end
                         imgui.SetCursorPos(imgui.ImVec2(490, 33))
                             if imgui.Button(fa.ICON_REFRESH .. '##3',imgui.ImVec2(41,20)) then
-                                notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                                notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                             end
                         imgui.SetCursorPos(imgui.ImVec2(535, 33))
                             if imgui.Button(fa.ICON_TRASH .. '##4',imgui.ImVec2(42,20)) then
@@ -278,14 +278,14 @@ function imgui.OnDrawFrame()
                             end
                         imgui.Separator()
 
-                        -- Р’РўРћР РђРЇ РЎРўР РћРљРђ
+                        -- ВТОРАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 64))
                         if mainIni.Music1.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music1.NamePesnya)
                                 if imgui.IsItemHovered() then
                                     imgui.BeginTooltip()
-                                    imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music1.NamePesnya))
+                                    imgui.TextUnformatted(u8('Полное название: '..mainIni.Music1.NamePesnya))
                                     imgui.EndTooltip()
                                 end
                                     imgui.NextColumn()
@@ -293,7 +293,7 @@ function imgui.OnDrawFrame()
                                             imgui.Text(u8''..mainIni.Music1.URL)
                                                 if imgui.IsItemHovered() then
                                                     imgui.BeginTooltip()
-                                                    imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music1.URL))
+                                                    imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music1.URL))
                                                     imgui.EndTooltip()
                                                 end
                         elseif mainIni.Music1.NamePesnya == '' then
@@ -305,7 +305,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                             imgui.SetCursorPos(imgui.ImVec2(395, 63))
                                 if imgui.Button(fa.ICON_PLAY .. '##5',imgui.ImVec2(43, 20)) then
-                                    notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music1.NamePesnya),2,1,5)
+                                    notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music1.NamePesnya),2,1,5)
                                         if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                             if mainIni.Music1.URL ~= '' and string.lower(mainIni.Music1.URL):find('http') then
                                                 PlayPesnya = loadAudioStream(mainIni.Music1.URL)
@@ -315,15 +315,15 @@ function imgui.OnDrawFrame()
                             imgui.SetCursorPos(imgui.ImVec2(442, 63))
                                 if imgui.Button(fa.ICON_STOP .. '##6',imgui.ImVec2(43, 20)) then
                                     if PlayPesnya == nil then
-                                        notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                        notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                                     elseif PlayPesnya ~= nil then
                                         setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                            notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                            notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                                     end
                                 end
                             imgui.SetCursorPos(imgui.ImVec2(490, 63))
                                 if imgui.Button(fa.ICON_REFRESH .. '##7',imgui.ImVec2(41,20)) then
-                                    notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                                    notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                                 end
                             imgui.SetCursorPos(imgui.ImVec2(535, 63))
                                 if imgui.Button(fa.ICON_TRASH .. '##8',imgui.ImVec2(42,20)) then
@@ -335,14 +335,14 @@ function imgui.OnDrawFrame()
                                 end
                         imgui.Separator()
 
-                        -- РўР Р•РўР¬РЇ РЎРўР РћРљРђ
+                        -- ТРЕТЬЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 94))
                         if mainIni.Music2.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music2.NamePesnya)
                                 if imgui.IsItemHovered() then
                                     imgui.BeginTooltip()
-                                    imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music2.NamePesnya))
+                                    imgui.TextUnformatted(u8('Полное название: '..mainIni.Music2.NamePesnya))
                                     imgui.EndTooltip()
                                 end
                                 imgui.NextColumn()
@@ -350,7 +350,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music2.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music2.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music2.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music2.NamePesnya == '' then
@@ -362,7 +362,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 93))
                             if imgui.Button(fa.ICON_PLAY .. '##9',imgui.ImVec2(43, 20)) then
-                                notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music2.NamePesnya),2,1,5)
+                                notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music2.NamePesnya),2,1,5)
                                     if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                         if mainIni.Music2.URL ~= '' and string.lower(mainIni.Music2.URL):find('http') then
                                             PlayPesnya = loadAudioStream(mainIni.Music2.URL)
@@ -372,15 +372,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 93))
                             if imgui.Button(fa.ICON_STOP .. '##10',imgui.ImVec2(43, 20)) then
                                 if PlayPesnya == nil then
-                                    notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                    notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                                 elseif PlayPesnya ~= nil then
                                     setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                        notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                        notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                                 end
                             end
                         imgui.SetCursorPos(imgui.ImVec2(490, 93))
                             if imgui.Button(fa.ICON_REFRESH .. '##11',imgui.ImVec2(41,20)) then
-                                notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                                notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                             end
                         imgui.SetCursorPos(imgui.ImVec2(535, 93))
                             if imgui.Button(fa.ICON_TRASH .. '##12',imgui.ImVec2(42,20)) then
@@ -392,14 +392,14 @@ function imgui.OnDrawFrame()
                             end
                         imgui.Separator()
 
-                        -- Р§Р•РўР’Р•Р РўРђРЇ РЎРўР РћРљРђ
+                        -- ЧЕТВЕРТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 124))
                         if mainIni.Music3.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music3.NamePesnya)
                                 if imgui.IsItemHovered() then
                                     imgui.BeginTooltip()
-                                    imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music3.NamePesnya))
+                                    imgui.TextUnformatted(u8('Полное название: '..mainIni.Music3.NamePesnya))
                                     imgui.EndTooltip()
                                 end
                                 imgui.NextColumn()
@@ -407,7 +407,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music3.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music3.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music3.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music3.NamePesnya == '' then
@@ -419,7 +419,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 123))
                             if imgui.Button(fa.ICON_PLAY .. '##13',imgui.ImVec2(43, 20)) then
-                                notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music3.NamePesnya),2,1,5)
+                                notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music3.NamePesnya),2,1,5)
                                     if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                         if mainIni.Music3.URL ~= '' and string.lower(mainIni.Music3.URL):find('http') then
                                             PlayPesnya = loadAudioStream(mainIni.Music3.URL)
@@ -429,15 +429,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 123))
                             if imgui.Button(fa.ICON_STOP .. '##14',imgui.ImVec2(43, 20)) then
                                 if PlayPesnya == nil then
-                                    notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                    notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                                 elseif PlayPesnya ~= nil then
                                     setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                        notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                        notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                                 end
                             end
                         imgui.SetCursorPos(imgui.ImVec2(490, 123))
                             if imgui.Button(fa.ICON_REFRESH .. '##15',imgui.ImVec2(41,20)) then
-                                notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                                notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                             end
                         imgui.SetCursorPos(imgui.ImVec2(535, 123))
                             if imgui.Button(fa.ICON_TRASH .. '##16',imgui.ImVec2(42,20)) then
@@ -449,14 +449,14 @@ function imgui.OnDrawFrame()
                             end
                         imgui.Separator()
 
-                        -- РџРЇРўРђРЇ РЎРўР РћРљРђ
+                        -- ПЯТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 154))
                         if mainIni.Music4.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music4.NamePesnya)
                                 if imgui.IsItemHovered() then
                                     imgui.BeginTooltip()
-                                    imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music4.NamePesnya))
+                                    imgui.TextUnformatted(u8('Полное название: '..mainIni.Music4.NamePesnya))
                                     imgui.EndTooltip()
                                 end
                                 imgui.NextColumn()
@@ -464,7 +464,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music4.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music4.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music4.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music4.NamePesnya == '' then
@@ -476,7 +476,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 153))
                             if imgui.Button(fa.ICON_PLAY .. '##17',imgui.ImVec2(43, 20)) then
-                                notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music4.NamePesnya),2,1,5)
+                                notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music4.NamePesnya),2,1,5)
                                     if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                         if mainIni.Music4.URL ~= '' and string.lower(mainIni.Music4.URL):find('http') then
                                             PlayPesnya = loadAudioStream(mainIni.Music4.URL)
@@ -486,15 +486,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 153))
                             if imgui.Button(fa.ICON_STOP .. '##18',imgui.ImVec2(43, 20)) then
                                 if PlayPesnya == nil then
-                                    notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                    notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                                 elseif PlayPesnya ~= nil then
                                     setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                        notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                        notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                                 end
                             end
                         imgui.SetCursorPos(imgui.ImVec2(490, 153))
                             if imgui.Button(fa.ICON_REFRESH .. '##19',imgui.ImVec2(41,20)) then
-                                notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                                notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                             end
                         imgui.SetCursorPos(imgui.ImVec2(535, 153))
                             if imgui.Button(fa.ICON_TRASH .. '##20',imgui.ImVec2(42,20)) then
@@ -506,14 +506,14 @@ function imgui.OnDrawFrame()
                             end
                         imgui.Separator()
 
-                        -- РЁР•РЎРўРђРЇ РЎРўР РћРљРђ
+                        -- ШЕСТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 184))
                         if mainIni.Music5.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music5.NamePesnya)
                                 if imgui.IsItemHovered() then
                                     imgui.BeginTooltip()
-                                    imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music5.NamePesnya))
+                                    imgui.TextUnformatted(u8('Полное название: '..mainIni.Music5.NamePesnya))
                                     imgui.EndTooltip()
                                 end
                                 imgui.NextColumn()
@@ -521,7 +521,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music5.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music5.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music5.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music5.NamePesnya == '' then
@@ -533,7 +533,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 183))
                             if imgui.Button(fa.ICON_PLAY .. '##21',imgui.ImVec2(43, 20)) then
-                                notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music5.NamePesnya),2,1,5)
+                                notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music5.NamePesnya),2,1,5)
                                     if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                         if mainIni.Music5.URL ~= '' and string.lower(mainIni.Music5.URL):find('http') then
                                             PlayPesnya = loadAudioStream(mainIni.Music5.URL)
@@ -543,15 +543,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 183))
                             if imgui.Button(fa.ICON_STOP .. '##22',imgui.ImVec2(43, 20)) then
                                 if PlayPesnya == nil then
-                                    notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                    notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                                 elseif PlayPesnya ~= nil then
                                     setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                        notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                        notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                                 end
                             end
                         imgui.SetCursorPos(imgui.ImVec2(490, 183))
                             if imgui.Button(fa.ICON_REFRESH .. '##23',imgui.ImVec2(41,20)) then
-                                notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                                notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                             end
                         imgui.SetCursorPos(imgui.ImVec2(535, 183))
                             if imgui.Button(fa.ICON_TRASH .. '##24',imgui.ImVec2(42,20)) then
@@ -563,14 +563,14 @@ function imgui.OnDrawFrame()
                             end
                         imgui.Separator()
 
-                        -- РЎР•Р”Р¬РњРђРЇ РЎРўР РћРљРђ
+                        -- СЕДЬМАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 214))
                         if mainIni.Music6.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music6.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music6.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music6.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -578,7 +578,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music6.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music6.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music6.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music6.NamePesnya == '' then
@@ -590,7 +590,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 213))
                         if imgui.Button(fa.ICON_PLAY .. '##25',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music6.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music6.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music6.URL ~= '' and string.lower(mainIni.Music6.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music6.URL)
@@ -600,15 +600,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 213))
                         if imgui.Button(fa.ICON_STOP .. '##26',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 213))
                         if imgui.Button(fa.ICON_REFRESH .. '##27',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 213))
                         if imgui.Button(fa.ICON_TRASH .. '##28',imgui.ImVec2(42,20)) then
@@ -620,14 +620,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р’РћРЎР¬РњРђРЇ РЎРўР РћРљРђ
+                        -- ВОСЬМАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 244))
                         if mainIni.Music7.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music7.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music7.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music7.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -635,7 +635,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music7.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music7.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music7.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music7.NamePesnya == '' then
@@ -647,7 +647,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 243))
                         if imgui.Button(fa.ICON_PLAY .. '##29',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music7.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music7.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music7.URL ~= '' and string.lower(mainIni.Music7.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music7.URL)
@@ -657,15 +657,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 243))
                         if imgui.Button(fa.ICON_STOP .. '##30',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 243))
                         if imgui.Button(fa.ICON_REFRESH .. '##31',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 243))
                         if imgui.Button(fa.ICON_TRASH .. '##32',imgui.ImVec2(42,20)) then
@@ -677,14 +677,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р”Р•Р’РЇРўРђРЇ РЎРўР РћРљРђ
+                        -- ДЕВЯТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 274))
                         if mainIni.Music8.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music8.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music8.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music8.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -692,7 +692,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music8.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music8.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music8.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music8.NamePesnya == '' then
@@ -704,7 +704,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 273))
                         if imgui.Button(fa.ICON_PLAY .. '##33',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music8.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music8.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music8.URL ~= '' and string.lower(mainIni.Music8.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music.URL)
@@ -714,15 +714,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 273))
                         if imgui.Button(fa.ICON_STOP .. '##34',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 273))
                         if imgui.Button(fa.ICON_REFRESH .. '##35',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 273))
                         if imgui.Button(fa.ICON_TRASH .. '##36',imgui.ImVec2(42,20)) then
@@ -734,14 +734,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р”Р•РЎРЇРўРђРЇ РЎРўР РћРљРђ
+                        -- ДЕСЯТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 304))
                         if mainIni.Music9.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music9.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music9.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music9.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -749,7 +749,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music9.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music9.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music9.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music9.NamePesnya == '' then
@@ -761,7 +761,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 303))
                         if imgui.Button(fa.ICON_PLAY .. '##37',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music9.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music9.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music9.URL ~= '' and string.lower(mainIni.Music9.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music9.URL)
@@ -771,15 +771,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 303))
                         if imgui.Button(fa.ICON_STOP .. '##38',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 303))
                         if imgui.Button(fa.ICON_REFRESH .. '##39',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 303))
                         if imgui.Button(fa.ICON_TRASH .. '##40',imgui.ImVec2(42,20)) then
@@ -791,14 +791,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- РћР”РРќРќРђР”Р¦РђРўРђРЇ РЎРўР РћРљРђ
+                        -- ОДИННАДЦАТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 334))
                         if mainIni.Music10.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music10.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music10.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music10.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -806,7 +806,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music10.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music10.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music10.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music10.NamePesnya == '' then
@@ -818,7 +818,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 333))
                         if imgui.Button(fa.ICON_PLAY .. '##41',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music10.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music10.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music10.URL ~= '' and string.lower(mainIni.Music10.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music10.URL)
@@ -828,15 +828,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 333))
                         if imgui.Button(fa.ICON_STOP .. '##42',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 333))
                         if imgui.Button(fa.ICON_REFRESH .. '##43',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 333))
                         if imgui.Button(fa.ICON_TRASH .. '##44',imgui.ImVec2(42,20)) then
@@ -848,14 +848,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р”Р’Р•РќРђР”Р¦РђРўРђРЇ РЎРўР РћРљРђ
+                        -- ДВЕНАДЦАТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 364))
                         if mainIni.Music11.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music11.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music11.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music11.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -863,7 +863,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music11.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music11.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music11.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music11.NamePesnya == '' then
@@ -875,7 +875,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 363))
                         if imgui.Button(fa.ICON_PLAY .. '##45',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music11.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music11.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music11.URL ~= '' and string.lower(mainIni.Music11.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music11.URL)
@@ -885,15 +885,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 363))
                         if imgui.Button(fa.ICON_STOP .. '##46',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 363))
                         if imgui.Button(fa.ICON_REFRESH .. '##47',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 363))
                         if imgui.Button(fa.ICON_TRASH .. '##48',imgui.ImVec2(42,20)) then
@@ -905,14 +905,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- РўР РРќРђР”Р¦РђРўРђРЇ РЎРўР РћРљРђ
+                        -- ТРИНАДЦАТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 394))
                         if mainIni.Music12.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music12.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music12.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music12.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -920,7 +920,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music12.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music12.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music12.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music12.NamePesnya == '' then
@@ -932,7 +932,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 393))
                         if imgui.Button(fa.ICON_PLAY .. '##49',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music12.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music12.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music12.URL ~= '' and string.lower(mainIni.Music12.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music12.URL)
@@ -942,15 +942,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 393))
                         if imgui.Button(fa.ICON_STOP .. '##50',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 393))
                         if imgui.Button(fa.ICON_REFRESH .. '##51',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 393))
                         if imgui.Button(fa.ICON_TRASH .. '##52',imgui.ImVec2(42,20)) then
@@ -962,14 +962,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р§Р•РўР«Р РќРђР”Р¦РђРўРђРЇ РЎРўР РћРљРђ
+                        -- ЧЕТЫРНАДЦАТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 424))
                         if mainIni.Music13.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music13.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music13.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music13.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -977,7 +977,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music13.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music13.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music13.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music13.NamePesnya == '' then
@@ -989,7 +989,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 423))
                         if imgui.Button(fa.ICON_PLAY .. '##53',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music13.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music13.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music13.URL ~= '' and string.lower(mainIni.Music13.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music13.URL)
@@ -999,15 +999,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 423))
                         if imgui.Button(fa.ICON_STOP .. '##54',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 423))
                         if imgui.Button(fa.ICON_REFRESH .. '##55',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 423))
                         if imgui.Button(fa.ICON_TRASH .. '##56',imgui.ImVec2(42,20)) then
@@ -1019,14 +1019,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- РџРЇРўРќРђР”Р¦РђРўРђРЇ РЎРўР РћРљРђ
+                        -- ПЯТНАДЦАТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 454))
                         if mainIni.Music14.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music14.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music14.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music14.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -1034,7 +1034,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music14.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music14.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music14.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music14.NamePesnya == '' then
@@ -1046,7 +1046,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 453))
                         if imgui.Button(fa.ICON_PLAY .. '##57',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music14.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music14.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music14.URL ~= '' and string.lower(mainIni.Music14.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music14.URL)
@@ -1056,15 +1056,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 453))
                         if imgui.Button(fa.ICON_STOP .. '##58',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 453))
                         if imgui.Button(fa.ICON_REFRESH .. '##59',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 453))
                         if imgui.Button(fa.ICON_TRASH .. '##60',imgui.ImVec2(42,20)) then
@@ -1076,14 +1076,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- РЁР•РЎРўРќРђР”Р¦РђРўРђРЇ РЎРўР РћРљРђ
+                        -- ШЕСТНАДЦАТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 484))
                         if mainIni.Music15.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music15.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music15.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music15.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -1091,7 +1091,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music15.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music15.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music15.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music15.NamePesnya == '' then
@@ -1103,7 +1103,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 483))
                         if imgui.Button(fa.ICON_PLAY .. '##61',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music15.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music15.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music15.URL ~= '' and string.lower(mainIni.Music15.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music15.URL)
@@ -1113,15 +1113,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 483))
                         if imgui.Button(fa.ICON_STOP .. '##62',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 483))
                         if imgui.Button(fa.ICON_REFRESH .. '##63',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 483))
                         if imgui.Button(fa.ICON_TRASH .. '##64',imgui.ImVec2(42,20)) then
@@ -1133,14 +1133,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- РЎР•РњРќРђР”Р¦РђРўРђРЇ РЎРўР РћРљРђ
+                        -- СЕМНАДЦАТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 514))
                         if mainIni.Music16.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music16.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music16.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music16.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -1148,7 +1148,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music16.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music16.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music16.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music16.NamePesnya == '' then
@@ -1160,7 +1160,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 513))
                         if imgui.Button(fa.ICON_PLAY .. '##65',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music16.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music16.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music16.URL ~= '' and string.lower(mainIni.Music16.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music16.URL)
@@ -1170,15 +1170,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 513))
                         if imgui.Button(fa.ICON_STOP .. '##66',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 513))
                         if imgui.Button(fa.ICON_REFRESH .. '##67',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 513))
                         if imgui.Button(fa.ICON_TRASH .. '##68',imgui.ImVec2(42,20)) then
@@ -1190,14 +1190,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р’РћРЎР•РњРќРђР”Р¦РђРўРђРЇ РЎРўР РћРљРђ
+                        -- ВОСЕМНАДЦАТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 544))
                         if mainIni.Music17.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music17.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music17.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music17.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -1205,7 +1205,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music17.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music17.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music17.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music17.NamePesnya == '' then
@@ -1217,7 +1217,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 543))
                         if imgui.Button(fa.ICON_PLAY .. '##69',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music17.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music17.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music17.URL ~= '' and string.lower(mainIni.Music17.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music17.URL)
@@ -1227,15 +1227,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 543))
                         if imgui.Button(fa.ICON_STOP .. '##70',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 543))
                         if imgui.Button(fa.ICON_REFRESH .. '##71',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 543))
                         if imgui.Button(fa.ICON_TRASH .. '##72',imgui.ImVec2(42,20)) then
@@ -1247,14 +1247,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р”Р•Р’РЇРўРќРђР”Р¦РђРўРђРЇ РЎРўР РћРљРђ
+                        -- ДЕВЯТНАДЦАТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 574))
                         if mainIni.Music18.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music18.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music18.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music18.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -1262,7 +1262,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music18.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music18.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music18.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music18.NamePesnya == '' then
@@ -1274,7 +1274,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 573))
                         if imgui.Button(fa.ICON_PLAY .. '##73',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music18.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music18.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music18.URL ~= '' and string.lower(mainIni.Music18.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music18.URL)
@@ -1284,15 +1284,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 573))
                         if imgui.Button(fa.ICON_STOP .. '##74',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 573))
                         if imgui.Button(fa.ICON_REFRESH .. '##75',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 573))
                         if imgui.Button(fa.ICON_TRASH .. '##76',imgui.ImVec2(42,20)) then
@@ -1304,14 +1304,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р”Р’РђР”Р¦РђРўРђРЇ РЎРўР РћРљРђ
+                        -- ДВАДЦАТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 604))
                         if mainIni.Music19.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music19.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music19.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music19.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -1319,7 +1319,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music19.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music19.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music19.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music19.NamePesnya == '' then
@@ -1331,7 +1331,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 603))
                         if imgui.Button(fa.ICON_PLAY .. '##77',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music19.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music19.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music19.URL ~= '' and string.lower(mainIni.Music19.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music19.URL)
@@ -1341,15 +1341,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 603))
                         if imgui.Button(fa.ICON_STOP .. '##78',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 603))
                         if imgui.Button(fa.ICON_REFRESH .. '##79',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 603))
                         if imgui.Button(fa.ICON_TRASH .. '##80',imgui.ImVec2(42,20)) then
@@ -1361,14 +1361,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р”Р’РђР”Р¦РђРўР¬ РџР•Р Р’РђРЇ РЎРўР РћРљРђ
+                        -- ДВАДЦАТЬ ПЕРВАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 634))
                         if mainIni.Music20.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music20.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music20.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music20.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -1376,7 +1376,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music20.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music20.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music20.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music20.NamePesnya == '' then
@@ -1388,7 +1388,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 633))
                         if imgui.Button(fa.ICON_PLAY .. '##81',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music20.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music20.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music20.URL ~= '' and string.lower(mainIni.Music20.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music20.URL)
@@ -1398,15 +1398,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 633))
                         if imgui.Button(fa.ICON_STOP .. '##82',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 633))
                         if imgui.Button(fa.ICON_REFRESH .. '##83',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 633))
                         if imgui.Button(fa.ICON_TRASH .. '##84',imgui.ImVec2(42,20)) then
@@ -1418,14 +1418,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р”Р’РђР”Р¦РђРўР¬ Р’РўРћР РђРЇ РЎРўР РћРљРђ
+                        -- ДВАДЦАТЬ ВТОРАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 664))
                         if mainIni.Music21.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music21.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music21.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music21.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -1433,7 +1433,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music21.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music21.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music21.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music21.NamePesnya == '' then
@@ -1445,7 +1445,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 663))
                         if imgui.Button(fa.ICON_PLAY .. '##85',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music21.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music21.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music21.URL ~= '' and string.lower(mainIni.Music21.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music21.URL)
@@ -1455,15 +1455,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 663))
                         if imgui.Button(fa.ICON_STOP .. '##86',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 663))
                         if imgui.Button(fa.ICON_REFRESH .. '##87',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 663))
                         if imgui.Button(fa.ICON_TRASH .. '##88',imgui.ImVec2(42,20)) then
@@ -1475,14 +1475,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р”Р’РђР”Р¦РђРўР¬ РўР Р•РўР¬РЇ РЎРўР РћРљРђ
+                        -- ДВАДЦАТЬ ТРЕТЬЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 694))
                         if mainIni.Music22.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music22.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music22.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music22.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -1490,7 +1490,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music22.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music22.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music22.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music22.NamePesnya == '' then
@@ -1502,7 +1502,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 693))
                         if imgui.Button(fa.ICON_PLAY .. '##89',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music22.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music22.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music22.URL ~= '' and string.lower(mainIni.Music22.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music22.URL)
@@ -1512,15 +1512,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 693))
                         if imgui.Button(fa.ICON_STOP .. '##90',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 693))
                         if imgui.Button(fa.ICON_REFRESH .. '##91',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 693))
                         if imgui.Button(fa.ICON_TRASH .. '##92',imgui.ImVec2(42,20)) then
@@ -1532,14 +1532,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р”Р’РђР”Р¦РђРўР¬ Р§Р•РўР’Р•Р РўРђРЇ РЎРўР РћРљРђ
+                        -- ДВАДЦАТЬ ЧЕТВЕРТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 724))
                         if mainIni.Music23.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music23.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music23.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music23.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -1547,7 +1547,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music23.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music23.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music23.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music23.NamePesnya == '' then
@@ -1559,7 +1559,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 723))
                         if imgui.Button(fa.ICON_PLAY .. '##93',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music23.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music23.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music23.URL ~= '' and string.lower(mainIni.Music23.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music23.URL)
@@ -1569,15 +1569,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 723))
                         if imgui.Button(fa.ICON_STOP .. '##94',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 723))
                         if imgui.Button(fa.ICON_REFRESH .. '##95',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 723))
                         if imgui.Button(fa.ICON_TRASH .. '##96',imgui.ImVec2(42,20)) then
@@ -1589,14 +1589,14 @@ function imgui.OnDrawFrame()
                         end
                         imgui.Separator()
 
-                        -- Р”Р’РђР”Р¦РђРўР¬ РџРЇРўРђРЇ РЎРўР РћРљРђ
+                        -- ДВАДЦАТЬ ПЯТАЯ СТРОКА
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(8, 754))
                         if mainIni.Music24.NamePesnya ~= '' then
                             imgui.Text(u8''..mainIni.Music24.NamePesnya)
                             if imgui.IsItemHovered() then
                                 imgui.BeginTooltip()
-                                imgui.TextUnformatted(u8('РџРѕР»РЅРѕРµ РЅР°Р·РІР°РЅРёРµ: '..mainIni.Music24.NamePesnya))
+                                imgui.TextUnformatted(u8('Полное название: '..mainIni.Music24.NamePesnya))
                                 imgui.EndTooltip()
                             end
                                 imgui.NextColumn()
@@ -1604,7 +1604,7 @@ function imgui.OnDrawFrame()
                                         imgui.Text(u8''..mainIni.Music24.URL)
                                         if imgui.IsItemHovered() then
                                             imgui.BeginTooltip()
-                                            imgui.TextUnformatted(u8('РџРѕР»РЅР°СЏ СЃСЃС‹Р»РєР°: '..mainIni.Music24.URL))
+                                            imgui.TextUnformatted(u8('Полная ссылка: '..mainIni.Music24.URL))
                                             imgui.EndTooltip()
                                         end
                         elseif mainIni.Music24.NamePesnya == '' then
@@ -1616,7 +1616,7 @@ function imgui.OnDrawFrame()
                         imgui.NextColumn()
                         imgui.SetCursorPos(imgui.ImVec2(395, 753))
                         if imgui.Button(fa.ICON_PLAY .. '##97',imgui.ImVec2(43, 20)) then
-                            notify.addNotify('MusicPlay','РЎРµР№С‡Р°СЃ РёРіСЂР°РµС‚:\n'..u8:decode(mainIni.Music24.NamePesnya),2,1,5)
+                            notify.addNotify('MusicPlay','Сейчас играет:\n'..u8:decode(mainIni.Music24.NamePesnya),2,1,5)
                                 if PlayPesnya ~= nil then setAudioStreamState(PlayPesnya, as_action.STOP) end
                                     if mainIni.Music24.URL ~= '' and string.lower(mainIni.Music24.URL):find('http') then
                                         PlayPesnya = loadAudioStream(mainIni.Music24.URL)
@@ -1626,15 +1626,15 @@ function imgui.OnDrawFrame()
                         imgui.SetCursorPos(imgui.ImVec2(442, 753))
                         if imgui.Button(fa.ICON_STOP .. '##98',imgui.ImVec2(43, 20)) then
                             if PlayPesnya == nil then
-                                notify.addNotify('MusicPlay','Р§С‚Рѕ Р’С‹ СЃРѕР±СЂР°Р»РёСЃСЊ РѕСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ?',2,1,3)
+                                notify.addNotify('MusicPlay','Что Вы собрались останавливать?',2,1,3)
                             elseif PlayPesnya ~= nil then
                                 setAudioStreamState(PlayPesnya, as_action.PAUSE)
-                                    notify.addNotify('MusicPlay','РџРµСЃРЅСЏ Р±С‹Р»Р° РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°',2,1,3)
+                                    notify.addNotify('MusicPlay','Песня была приостановлена',2,1,3)
                             end
                         end
                         imgui.SetCursorPos(imgui.ImVec2(490, 753))
                         if imgui.Button(fa.ICON_REFRESH .. '##99',imgui.ImVec2(41,20)) then
-                            notify.addNotify('MusicPlay','РќРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ!\nР‘СѓРґРµС‚ РІ СЃР»РµРґСѓСЋС‰РёС… РІРµСЂСЃРёСЏС….',2,1,4)
+                            notify.addNotify('MusicPlay','Не реализовано!\nБудет в следующих версиях.',2,1,4)
                         end
                         imgui.SetCursorPos(imgui.ImVec2(535, 753))
                         if imgui.Button(fa.ICON_TRASH .. '##100',imgui.ImVec2(42,20)) then
@@ -1653,24 +1653,24 @@ function imgui.OnDrawFrame()
     if WindowNewMusic.v then
         imgui.SetNextWindowSize(imgui.ImVec2(450, 178), imgui.Cond.FirstUseEver)
         imgui.SetNextWindowPos(imgui.ImVec2(X / 2, Y / 1.8), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
-            imgui.Begin(u8'Р”РѕР±Р°РІР»СЏРµРј РјСѓР·С‹РєСѓ!', WindowNewMusic, imgui.WindowFlags.NoResize)
-                imgui.Text(u8'Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РїРµСЃРЅРё:')
+            imgui.Begin(u8'Добавляем музыку!', WindowNewMusic, imgui.WindowFlags.NoResize)
+                imgui.Text(u8'Введите название песни:')
                 imgui.InputText('##1', NamePesnya)
                 imgui.NewLine()
-                imgui.Text(u8'Р’РІРµРґРёС‚Рµ URL-Р°РґСЂРµСЃ РЅР° Р’Р°С€Сѓ РїРµСЃРЅСЋ:')
+                imgui.Text(u8'Введите URL-адрес на Вашу песню:')
                 imgui.InputText('##2', URL)
                 if TextError == 0 then
                     imgui.NewLine()
                 elseif TextError == 1 then
-                    imgui.CenterTextColoredRGB('{FF0000}РЈРєР°Р¶РёС‚Рµ РЅР°Р·РІР°РЅРёРµ РїРµСЃРЅРё Рё URL-Р°РґСЂРµСЃ!')
+                    imgui.CenterTextColoredRGB('{FF0000}Укажите название песни и URL-адрес!')
                 elseif TextError == 2 then
-                    imgui.CenterTextColoredRGB('{FF0000}РЈРєР°Р¶РёС‚Рµ РЅР°Р·РІР°РЅРёРµ РїРµСЃРЅРё!')
+                    imgui.CenterTextColoredRGB('{FF0000}Укажите название песни!')
                 elseif TextError == 3 then
-                    imgui.CenterTextColoredRGB('{FF0000}РЈРєР°Р¶РёС‚Рµ URL-Р°РґСЂРµСЃ!')
+                    imgui.CenterTextColoredRGB('{FF0000}Укажите URL-адрес!')
                 elseif TextError == 4 then
-                    imgui.CenterTextColoredRGB('{FF0000}РЎРѕС…СЂР°РЅРµРЅРѕ РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЃРµРЅ!')
+                    imgui.CenterTextColoredRGB('{FF0000}Сохранено максимальное количество песен!')
                 end
-                    if imgui.Button(fa.ICON_FLOPPY_O .. u8' Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІСѓСЋ РїРµСЃРЅСЋ!', imgui.ImVec2(-1, 20)) then
+                    if imgui.Button(fa.ICON_FLOPPY_O .. u8' Добавить новую песню!', imgui.ImVec2(-1, 20)) then
                         if URL.v == '' and NamePesnya.v == '' then
                             TextError = 1
                         elseif NamePesnya.v == '' then
@@ -1765,7 +1765,7 @@ function imgui.OnDrawFrame()
                                             mainIni.Znachenia.NullPesen = NullPesen
                                                 mainIni.Znachenia.Pesn = Pesn
                                                     inicfg.save(mainIni, directIni)
-                                                        notify.addNotify('РЎРѕС…СЂР°РЅРµРЅР° РЅРѕРІР°СЏ РїРµСЃРЅСЏ!','РќР°Р·РІР°РЅРёРµ РїРµСЃРЅРё: '..u8:decode(NamePesnya.v)..'\nРЎСЃС‹Р»РєР° РЅР° РїРµСЃРЅСЋ: '..u8:decode(URL.v),2,1,5)
+                                                        notify.addNotify('Сохранена новая песня!','Название песни: '..u8:decode(NamePesnya.v)..'\nСсылка на песню: '..u8:decode(URL.v),2,1,5)
                                                             URL.v = ''
                                                                 NamePesnya.v = ''
                                                                     TextError = 0
@@ -1841,58 +1841,58 @@ end
 
 -- Author: http://qrlk.me/samp
 
--- function autoupdate(json_url, prefix, url)
---     local dlstatus = require('moonloader').download_status
---     local json = getWorkingDirectory() .. '\\'..thisScript().name..'-version.json'
---     if doesFileExist(json) then os.remove(json) end
---     downloadUrlToFile(json_url, json,
---       function(id, status, p1, p2)
---         if status == dlstatus.STATUSEX_ENDDOWNLOAD then
---           if doesFileExist(json) then
---             local f = io.open(json, 'r')
---             if f then
---               local info = decodeJson(f:read('*a'))
---               updatelink = info.updateurl
---               updateversion = info.latest
---               f:close()
---               os.remove(json)
---               if updateversion ~= thisScript().version then
---                 lua_thread.create(function(prefix)
---                   local dlstatus = require('moonloader').download_status
---                   local color = -1
---                   sampAddChatMessage((prefix..'РћР±РЅР°СЂСѓР¶РµРЅРѕ РѕР±РЅРѕРІР»РµРЅРёРµ. РџС‹С‚Р°СЋСЃСЊ РѕР±РЅРѕРІРёС‚СЊСЃСЏ c '..thisScript().version..' РЅР° '..updateversion), color)
---                   wait(250)
---                   downloadUrlToFile(updatelink, thisScript().path,
---                     function(id3, status1, p13, p23)
---                       if status1 == dlstatus.STATUS_DOWNLOADINGDATA then
---                         print(string.format('Р—Р°РіСЂСѓР¶РµРЅРѕ %d РёР· %d.', p13, p23))
---                       elseif status1 == dlstatus.STATUS_ENDDOWNLOADDATA then
---                         print('Р—Р°РіСЂСѓР·РєР° РѕР±РЅРѕРІР»РµРЅРёСЏ Р·Р°РІРµСЂС€РµРЅР°.')
---                         sampAddChatMessage((prefix..'РћР±РЅРѕРІР»РµРЅРёРµ Р·Р°РІРµСЂС€РµРЅРѕ!'), color)
---                         goupdatestatus = true
---                         lua_thread.create(function() wait(500) thisScript():reload() end)
---                       end
---                       if status1 == dlstatus.STATUSEX_ENDDOWNLOAD then
---                         if goupdatestatus == nil then
---                           sampAddChatMessage((prefix..'РћР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕС€Р»Рѕ РЅРµСѓРґР°С‡РЅРѕ. Р—Р°РїСѓСЃРєР°СЋ СѓСЃС‚Р°СЂРµРІС€СѓСЋ РІРµСЂСЃРёСЋ..'), color)
---                           update = false
---                         end
---                       end
---                     end
---                   )
---                   end, prefix
---                 )
---               else
---                 update = false
---                 print('v'..thisScript().version..': РћР±РЅРѕРІР»РµРЅРёРµ РЅРµ С‚СЂРµР±СѓРµС‚СЃСЏ.')
---               end
---             end
---           else
---             print('v'..thisScript().version..': РќРµ РјРѕРіСѓ РїСЂРѕРІРµСЂРёС‚СЊ РѕР±РЅРѕРІР»РµРЅРёРµ. РЎРјРёСЂРёС‚РµСЃСЊ РёР»Рё РїСЂРѕРІРµСЂСЊС‚Рµ СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅРѕ РЅР° '..url)
---             update = false
---           end
---         end
---       end
---     )
---     while update ~= false do wait(100) end
--- end
+function autoupdate(json_url, prefix, url)
+    local dlstatus = require('moonloader').download_status
+    local json = getWorkingDirectory() .. '\\'..thisScript().name..'-version.json'
+    if doesFileExist(json) then os.remove(json) end
+    downloadUrlToFile(json_url, json,
+      function(id, status, p1, p2)
+        if status == dlstatus.STATUSEX_ENDDOWNLOAD then
+          if doesFileExist(json) then
+            local f = io.open(json, 'r')
+            if f then
+              local info = decodeJson(f:read('*a'))
+              updatelink = info.updateurl
+              updateversion = info.latest
+              f:close()
+              os.remove(json)
+              if updateversion ~= thisScript().version then
+                lua_thread.create(function(prefix)
+                  local dlstatus = require('moonloader').download_status
+                  local color = -1
+                  sampAddChatMessage((prefix..'Обнаружено обновление. Пытаюсь обновиться c '..thisScript().version..' на '..updateversion), color)
+                  wait(250)
+                  downloadUrlToFile(updatelink, thisScript().path,
+                    function(id3, status1, p13, p23)
+                      if status1 == dlstatus.STATUS_DOWNLOADINGDATA then
+                        print(string.format('Загружено %d из %d.', p13, p23))
+                      elseif status1 == dlstatus.STATUS_ENDDOWNLOADDATA then
+                        print('Загрузка обновления завершена.')
+                        sampAddChatMessage((prefix..'Обновление завершено!'), color)
+                        goupdatestatus = true
+                        lua_thread.create(function() wait(500) thisScript():reload() end)
+                      end
+                      if status1 == dlstatus.STATUSEX_ENDDOWNLOAD then
+                        if goupdatestatus == nil then
+                          sampAddChatMessage((prefix..'Обновление прошло неудачно. Запускаю устаревшую версию..'), color)
+                          update = false
+                        end
+                      end
+                    end
+                  )
+                  end, prefix
+                )
+              else
+                update = false
+                print('v'..thisScript().version..': Обновление не требуется.')
+              end
+            end
+          else
+            print('v'..thisScript().version..': Не могу проверить обновление. Смиритесь или проверьте самостоятельно на '..url)
+            update = false
+          end
+        end
+      end
+    )
+    while update ~= false do wait(100) end
+end
